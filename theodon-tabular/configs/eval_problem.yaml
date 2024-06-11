@@ -1,0 +1,26 @@
+
+experiment: "deadpan"
+N: 7
+lr: 0.025
+convergence_threshold: 0.001
+max_steps: 30000
+cuda: no
+
+priority: "variance"
+noise_variance: 0.1
+
+mask_prob: 0.5  # this is ignored if estimator.ensemble=0
+loss_fn: MSELoss
+
+er:
+  alpha: .95  # when this field is present a PER is built.
+  capacity: -1
+  batch_size: 1
+  hist_len: 1
+  async_memory: no
+  # beta: null  # [0,1], None deactivates importance sampling
+  # optim_steps: null  # If set it is used by importance sampling
+
+estimator: 
+  linear: yes
+  ensemble: 21  # if 0 there is no ensemble, 1 is invalid value

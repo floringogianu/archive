@@ -1,0 +1,27 @@
+env:
+  args_:
+    name:
+      - Ant-v2
+      - HalfCheetah-v2
+      - Humanoid-v2
+      - HumanoidStandup-v2
+      - Hopper-v2
+      - InvertedDoublePendulum-v2
+      - InvertedPendulum-v2
+      - Reacher-v2
+      - Swimmer-v2
+      - Walker2d-v2
+
+optim:
+  args_:
+    lr: [0.0003000, 0.000189, 0.000119, 0.000075, 0.000048]  #, 0.000030, 0.0000189, 0.0000119, 0.0000075, 0.0000048, 0.0000030]
+    eps: [0.0000001, 0.00001]
+
+estimator:
+  args_:
+    layer_dims:
+      - [150, 150]
+      - [256, 256]
+    spectral:
+      - null
+      - {"actor": "-2,-1", "critic": "-2"}

@@ -1,0 +1,16 @@
+algo: a2c
+base_seed: 42
+beta_entropy: 0.05117250758216516
+env_name: InvertedPendulumPyBulletEnv-v0
+experiment: a2c-ip_blt
+gamma: 0.9633277979008891
+hidden_size: 32
+log:
+  detailed: true
+  frequency: 100
+lr: 0.003143553293757548
+nsteps: 60
+save_agent: true
+training_steps: 1000000
+val_episodes: 100
+val_frequency: 25000

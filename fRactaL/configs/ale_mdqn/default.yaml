@@ -1,0 +1,51 @@
+# Follows hyperparams from Dopamine:
+# https://github.com/google/dopamine/blob/master/dopamine/jax/agents/dqn/configs/dqn.gin
+
+game: Pong
+
+experiment: MDQN
+device: cuda
+save: yes
+replay_save_freq: 8
+
+epoch_cnt: 50
+train_step_cnt: 250_000
+valid_step_cnt: 125_000
+val_epsilon: 0.001  # validation epsilon greedy
+
+agent:
+  name: M-DQN
+  args_:
+    epsilon: [linear, 1.0, 0.01, 250_000, 20_000]
+    gamma: 0.99
+    loss_fn: MSELoss
+    update_freq: 4
+    target_update_freq: 8000
+
+replay_:
+  capacity: 1_000_000
+  batch_size: 32
+  hist_len: 4
+  warmup_steps: 20_000
+  device: cpu
+
+estimator:
+  name: AtariNet
+  args_:
+    hidden_size: 512
+    hist_len: 4
+    spectral: null  # Usage: -1 or -2 or combined -1,-2,-3.
+    lipschitz_k: 5
+    random_power_iteration: yes
+    initializer: "xavier_uniform"  # this field can be missing
+
+pretrained:
+  source: "./results/2022Jun22-053957_F84_3v2/0001_model.args_.fc_layers__512__512__512_/0/model_0499.pkl"
+  layers: [0,3] # range
+  freeze: no
+
+optim:
+  name: "Adam"
+  args_:
+    lr: 0.0000625
+    eps: 0.0001500

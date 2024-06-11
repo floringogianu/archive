@@ -1,0 +1,36 @@
+game: "MiniGrid-Dynamic-Obstacles-8x8-v0"
+# either an int or a number of random seeds, ex.: r10 or r5
+# if seed: null then we train and test on all mdps.
+seed: null
+
+train_steps: 3_000_000
+test_steps: 30_000
+test_render: no
+
+lr: 0.0005
+gamma: 0.92
+double: True
+start_learning: 10_000
+update_freq: 4
+target_update: 500
+
+estimator:
+  lin_size: 64
+  ff: true
+
+er:
+  priority: tde
+  alpha: .7  # when this field is not None a PER is built.
+  beta: .4
+  capacity: 100_000
+  batch_size: 32
+  hist_len: 3
+  async_memory: no
+
+exploration:
+  name: linear
+  start: 1.0
+  end: 0.1
+  steps: 100_000
+
+device: cuda

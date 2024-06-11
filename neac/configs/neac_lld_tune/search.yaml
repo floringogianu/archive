@@ -1,0 +1,11 @@
+hyperopt:
+  lr: ["uniform", [0.0001, 0.005]]
+  nsteps: ["choice", [20, 30, 60]]
+  gamma: ["uniform", [0.91, 0.99]]
+  beta_entropy: ["uniform", [0.001, 0.1]]
+
+  dnd:
+    size: ["choice", [1000, 3000, 5000, 10000, 20000, 30000]]
+    lr: ["uniform", [0.01, 0.7]] 
+    key_size: ["choice", [24, 32, 64]]
+    knn_no: ["choice", [8, 16, 32, 50]]

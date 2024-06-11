@@ -1,0 +1,6 @@
+game: [Asterix, BeamRider, Bowling, Breakout] #, Enduro, MsPacman, Qbert, Riverraid, Seaquest, SpaceInvaders]
+
+pretrained:
+  layers:
+    - [0, 2]
+    - [0, 4]

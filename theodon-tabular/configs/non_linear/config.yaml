@@ -1,0 +1,13 @@
+N: [5,6,7,8,9,10,11,12,13,14,15,16]
+lr: [0.25, 0.01]
+
+priority: [td, variance, uniform]
+estimator:
+  ensemble: [0, 21]
+
+er:
+  alpha: [0.95]
+
+liftoff:
+  - vars: [priority, er.alpha]
+    "->": [[uniform, delete]]

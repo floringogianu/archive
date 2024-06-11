@@ -1,0 +1,33 @@
+env:
+  args_:
+    name:
+      - "Ant-v2"
+      - "HalfCheetah-v2"
+      - "Humanoid-v2"
+      - "HumanoidStandup-v2"
+      - "Hopper-v2"
+      - "InvertedDoublePendulum-v2"
+      - "InvertedPendulum-v2"
+      - "Reacher-v2"
+      - "Swimmer-v2"
+      - "Walker2d-v2"
+
+agent:
+  dataset_size: [8192]
+
+optim:
+  args_:
+    lr: [0.00017]
+    #lr: [0.00300, 0.00169, 0.00095, 0.00053, 0.00030, 0.00017, 0.00009, 0.00005, 0.00003]
+
+estimator:
+  args_:
+    layer_dims:
+      - [256, 256]
+    spectral:
+      - null
+      - {"actor": "-2", "critic": "-2"}
+      - {"actor": "-2,-1", "critic": "-2"}
+      # - {"actor": "-3,-2,-1", "critic": "-2"}
+      # - {"actor": "-2", "critic": "-3,-2"}
+      # - {"actor": "-2,-1", "critic": "-3,-2"}

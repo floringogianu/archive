@@ -1,0 +1,22 @@
+experiment: VAE
+device: cuda
+
+dset_name: dsprites
+trn_steps: 250_000
+val_freq: 10_000
+batch_size: 64
+
+trn_variant: interpolation
+val_variant: extrapolation
+
+beta: 1.0
+
+model:
+  name: VAE
+  args_:
+    zdim: 10
+
+optim:
+  name: "Adam"
+  args_:
+    lr: 0.0001

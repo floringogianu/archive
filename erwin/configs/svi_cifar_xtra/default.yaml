@@ -1,0 +1,34 @@
+experiment: svi-cf10-xtra
+
+mode: SVI
+trn_mcs: 1
+tst_mcs: 64
+
+# warmup:
+#   epochs: 350
+#   split: 0.5
+#   reset_optim: yes
+
+epochs: 350
+
+optim:
+  name: Adam
+  args:
+    lr: 0.01
+    amsgrad: yes
+
+trn_loader:
+  batch_size: 128
+  shuffle: yes
+  num_workers: 2
+  pin_memory: yes
+val_loader:
+  batch_size: 1000
+  shuffle: yes
+  num_workers: 2
+  pin_memory: yes
+
+log:
+  detailed: no
+  mle_ish: yes
+  train_no_aug: yes

@@ -1,0 +1,26 @@
+batch_size: 128
+augmentation: yes
+epochs: 250
+
+# model:
+#   name: SVHNMlp
+#   args_:
+#     hidden: [128, 128, 128, 512]
+#     spectral: "-2"
+
+model:
+  name: SVHNNet
+  args_:
+    conv_scale: 1
+    hidden: [128, 128, 128, 512]
+    spectral: "-2"
+    deep_conv: no
+
+optimizer_:
+  name: Adam
+  lr: 0.001
+
+scheduler_:
+  name: StepLR
+  step_size: 150
+  gamma: 0.1

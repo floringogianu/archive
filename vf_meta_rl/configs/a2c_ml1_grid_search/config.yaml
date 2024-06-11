@@ -1,0 +1,12 @@
+rl_algorithm:
+  n_steps: [20, 100, 500]
+  gae: [yes, no]
+  
+optimizer:
+  args_:
+    lr: [0.00025, 0.0001, 0.000075]
+
+
+
+
+

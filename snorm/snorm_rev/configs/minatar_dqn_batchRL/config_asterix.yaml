@@ -1,0 +1,8 @@
+# DQN Minatar
+
+game: [MinAtar-asterix]
+replay_path: [./results/2021Mar07-202512_minatar_dqn_replays/0000_estimator.args_.spectral_None__game_MinAtar-asterix]
+
+estimator:
+  args_:
+    spectral: [null, "-2"]

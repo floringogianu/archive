@@ -1,0 +1,35 @@
+# DQN Minatar
+
+experiment: PPO-Humanoid
+device: cuda
+
+game: humanoid
+env_no: 2048
+
+epochs: 30
+train_step_cnt: 5000  # steps in the *parallel* env
+valid_ep_cnt: 4096  # some multiple of env_no
+
+agent:
+  name: PPO
+  nsteps: 1024
+  batch_size: 1024
+  mini_epochs: 8
+  batch_num: 32
+  gamma: 0.97
+  entropy_coeff: 0.001
+  clip: 0.2
+  normalize_advantage: yes
+  reward_scale: 0.1
+
+estimator:
+  name: ActorCritic
+  args_:
+    layer_dims: [128, 128]
+    spectral: null
+
+optim:
+  name: "Adam"
+  args_:
+    lr: 0.001
+    eps: 0.00000001

@@ -1,0 +1,11 @@
+experiment: "FractalDB-1000"
+load_root: "./data/csv_rate0.2_category1000"
+save_root: "./data/FractalDB"
+image_size_x: 256
+image_size_y: 256
+pad_size_x: 6
+pad_size_y: 6
+iteration: 200_000
+instance: 40
+weight_csv: "./src/fractal_renderer/weights/weights_0.4.csv"
+draw_type: "patch_color"

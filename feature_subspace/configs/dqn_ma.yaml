@@ -1,0 +1,42 @@
+# DQN Minatar
+
+experiment: DQN-MA
+device: cpu
+save: yes
+replay_save_freq: 10
+
+epoch_cnt: 50
+train_step_cnt: 200000
+valid_step_cnt: 125000
+val_epsilon: 0.001  # validation epsilone greedy
+
+game: MinAtar-breakout
+
+agent:
+  name: DQN
+  args_:
+    epsilon: [linear, 1.0, 0.01, 250000, 5000]
+    gamma: 0.99
+    loss_fn: MSELoss
+    update_freq: 4
+    target_update_freq: 4000
+
+replay_:
+  capacity: 100000
+  batch_size: 32
+  hist_len: 1
+  device: cpu
+
+estimator:
+  name: MinAtarNet
+  args_:
+    layer_dims: [[32,32], [256]]
+    mode: line
+
+beta: 1.0
+
+optim:
+  name: "Adam"
+  args_:
+    lr: uniform(0.0000215, 0.001)
+    eps: uniform(0.00001, 0.01)

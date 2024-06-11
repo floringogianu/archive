@@ -1,0 +1,14 @@
+
+game: [halfcheetah]
+
+agent:
+  nsteps: [512, 1024, 2048]
+  entropy_coeff: [0.01, 0.001, 0.0001]
+
+estimator:
+  args_:
+    spectral:
+      - null
+      - {"actor": "-2", "critic": "-2"}
+      - {"actor": "-2,-1", "critic": "-2"}
+      - {"actor": "-3,-2,-1", "critic": "-2"}

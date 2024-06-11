@@ -1,0 +1,8 @@
+game: [MinAtar-asterix, MinAtar-breakout, MinAtar-seaquest, MinAtar-space_invaders]
+
+demon:
+  name: [null]
+
+estimator:
+  args_:
+    spectral: [null, "-2"]

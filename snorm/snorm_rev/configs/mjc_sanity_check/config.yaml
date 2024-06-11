@@ -1,0 +1,30 @@
+env:
+  args_:
+    name:
+      - Ant-v2
+      - HalfCheetah-v2
+      - Humanoid-v2
+      - HumanoidStandup-v2
+      - Hopper-v2
+      - InvertedDoublePendulum-v2
+      - InvertedPendulum-v2
+      - Reacher-v2
+      - Swimmer-v2
+      - Walker2d-v2
+
+agent:
+  dataset_size: [8192]
+  batch_size: [64, 256]
+  mini_epochs: [4, 10]
+  normalize_advantage: [yes, no]
+
+optim:
+  args_:
+    lr: [0.0001]
+
+estimator:
+  args_:
+    init: [kaiming_uniform, orthogonal]
+    spectral:
+      - null
+      - {"actor": "-2,-1", "critic": "-2"}

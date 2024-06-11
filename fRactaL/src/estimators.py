@@ -1,0 +1,482 @@
+""" Neural Network architecture for Atari games.
+"""
+from functools import partial, reduce
+from itertools import chain
+from math import sqrt
+from operator import mul
+
+import torch
+import torch.nn as nn
+from torch.nn.parameter import Parameter
+
+from src.conv_spectral_norm import Conv2dSpectralNorm, spectral_norm_conv2d
+from src.linear_spectral_norm import LinearSpectralNorm, spectral_norm
+
+__all__ = [
+    "AtariNet",
+    "MinAtarNet",
+    "get_feature_extractor",
+    "get_head",
+]
+
+
+def hook_spectral_normalization(  # pylint: disable=bad-continuation
+    spectral,
+    layers,
+    lipschitz_k=1,
+    random_power_iteration=False,
+    leave_smaller=False,
+    flow_through_norm=False,
+):
+    """Uses the convention in `spectral` to hook spectral normalization on
+    modules in `layers`.
+
+    Args:
+        spectral (str):         A string of negative indices. Ex.: `-1` or `-2,-3`.
+                                To hook spectral normalization only for computing the
+                                norm and not applying it on the weights add
+                                the identifier `L`.
+                                Ex.: `-1L`, `-2,-3,-4L`.
+        layers (list):          Ordered list of tuples of (module_name, nn.Module).
+        lipschitz_k (bool):     The target Lipschitz constant.
+        random_power_iteration: If True, power iteration is performed by each layer
+                                with probability 1/len(normalised_layers).
+        leave_smaller (bool):   If False divide by rho, if True by max(rho, 1).
+
+    Returns:
+        normalized: Layers
+    """
+    # Filter unsupported layers
+    layers = [
+        (n, m)
+        for (n, m) in layers
+        if isinstance(m, (nn.Conv2d, nn.Linear, SharedBiasLinear))
+    ]
+    N = len(layers)
+
+    # Some convenient conventions
+    if spectral == "":
+        # log all layers, but do not apply
+        spectral = ",".join([f"-{i}L" for i in range(N)])
+    elif spectral == "full":
+        # apply snorm everywhere
+        spectral = ",".join([f"-{i}" for i in range(N)])
+    else:
+        spectral = str(spectral)  # sometimes this is just a number eg.: -3
+
+    # For N=5, spectral="-2,-3L":   [('-2', True), ('-3L', False)]
+    layers_status = [(i, "L" not in i) for i in spectral.split(",")]
+    # For N=5, spectral="-2,-3L":   [(3, True), (2, False)]
+    layers_status = [(int(i if s else i[:-1]) % N, s) for i, s in layers_status]
+
+    power_iteration_prob = 1 / len(layers) if random_power_iteration else 1.0
+    hooked_layers = []
+
+    for (idx, active) in layers_status:
+        layer_name, layer = layers[idx]
+
+        if isinstance(layer, nn.Conv2d):
+            spectral_norm_conv2d(
+                layer,
+                active=active,
+                lipschitz_k=lipschitz_k,
+                power_iteration_prob=power_iteration_prob,
+                leave_smaller=leave_smaller,
+                flow_through_norm=flow_through_norm,
+            )
+        elif isinstance(layer, (nn.Linear, SharedBiasLinear)):
+            spectral_norm(
+                layer,
+                active=active,
+                lipschitz_k=lipschitz_k,
+                power_iteration_prob=power_iteration_prob,
+                leave_smaller=leave_smaller,
+                flow_through_norm=flow_through_norm,
+            )
+        else:
+            raise NotImplementedError(
+                "S-Norm on {} layer type not implemented for {} @ ({}): {}".format(
+                    type(layer), idx, layer_name, layer
+                )
+            )
+        hooked_layers.append((idx, layer))
+
+        print(
+            "{} λ={}/p={:2.2f} SNorm to {} @ ({}): {}".format(
+                "Active " if active else "Logging",
+                lipschitz_k,
+                power_iteration_prob,
+                idx,
+                layer_name,
+                layer,
+            )
+        )
+    return hooked_layers
+
+
+def get_feature_extractor(input_depth):
+    """ Configures the default Atari feature extractor. """
+    convs = [
+        nn.Conv2d(input_depth, 32, kernel_size=8, stride=4),
+        nn.Conv2d(32, 64, kernel_size=4, stride=2),
+        nn.Conv2d(64, 64, kernel_size=3, stride=1),
+    ]
+
+    return nn.Sequential(
+        convs[0],
+        nn.ReLU(inplace=True),
+        convs[1],
+        nn.ReLU(inplace=True),
+        convs[2],
+        nn.ReLU(inplace=True),
+    )
+
+
+def get_head(hidden_size, out_size, shared_bias=False):
+    """ Configures the default Atari output layers. """
+    fc0 = nn.Linear(64 * 7 * 7, hidden_size)
+    fc1 = (
+        SharedBiasLinear(hidden_size, out_size)
+        if shared_bias
+        else nn.Linear(hidden_size, out_size)
+    )
+    return nn.Sequential(fc0, nn.ReLU(inplace=True), fc1)
+
+
+def no_grad(module):
+    """ Callback for turning off the gradient of a module.
+    """
+    try:
+        module.weight.requires_grad = False
+    except AttributeError:
+        pass
+
+
+def variance_scaling_uniform_(tensor, scale=0.1, mode="fan_in"):
+    r"""Variance Scaling, as in Keras.
+
+    Uniform sampling from `[-a, a]` where:
+
+        `a = sqrt(3 * scale / n)`
+
+    and `n` is the number of neurons according to the `mode`.
+
+    """
+    # pylint: disable=protected-access,invalid-name
+    fan_in, fan_out = nn.init._calculate_fan_in_and_fan_out(tensor)
+    a = 3 * scale
+    a /= fan_in if mode == "fan_in" else fan_out
+    weights = nn.init._no_grad_uniform_(tensor, -a, a)
+    # pylint: enable=protected-access,invalid-name
+    return weights
+
+
+class SharedBiasLinear(nn.Linear):
+    """ Applies a linear transformation to the incoming data: `y = xA^T + b`.
+        As opposed to the default Linear layer it has a shared bias term.
+        This is employed for example in Double-DQN.
+
+    Args:
+        in_features: size of each input sample
+        out_features: size of each output sample
+    """
+
+    def __init__(self, in_features, out_features):
+        super(SharedBiasLinear, self).__init__(in_features, out_features, True)
+        self.bias = Parameter(torch.Tensor(1))
+
+    def extra_repr(self):
+        return "in_features={}, out_features={}, bias=shared".format(
+            self.in_features, self.out_features
+        )
+
+
+class AtariNet(nn.Module):
+    """ Estimator used for ATARI games.
+    """
+
+    def __init__(  # pylint: disable=bad-continuation
+        self,
+        action_no,
+        input_ch=1,
+        hist_len=4,
+        hidden_size=256,
+        shared_bias=False,
+        initializer="xavier_uniform",
+        support=None,
+        spectral=None,
+        **kwargs,
+    ):
+        super(AtariNet, self).__init__()
+
+        assert initializer in (
+            "xavier_uniform",
+            "variance_scaling_uniform",
+        ), "Only implements xavier_uniform and variance_scaling_uniform."
+
+        self.__action_no = action_no
+        self.__initializer = initializer
+        self.__support = None
+        self.spectral = spectral
+        if support is not None:
+            self.__support = nn.Parameter(
+                torch.linspace(*support), requires_grad=False
+            )  # handy to make it a Parameter so that model.to(device) works
+            out_size = action_no * len(self.__support)
+        else:
+            out_size = action_no
+
+        # get the feature extractor and fully connected layers
+        self.__features = get_feature_extractor(hist_len * input_ch)
+        self.__head = get_head(hidden_size, out_size, shared_bias)
+
+        self.reset_parameters()
+
+        # We allways compute spectral norm except when None or notrace
+        if spectral is not None:
+            self.__hooked_layers = hook_spectral_normalization(
+                spectral,
+                chain(self.__features.named_children(), self.__head.named_children()),
+                **kwargs,
+            )
+
+    def forward(self, x, probs=False, log_probs=False):
+        # assert x.dtype == torch.uint8, "The model expects states of type ByteTensor"
+        x = x.float().div(255)
+        assert not (probs and log_probs), "Can't output both p(s, a) and log(p(s, a))"
+
+        x = self.__features(x)
+        x = x.view(x.size(0), -1)
+        qs = self.__head(x)
+
+        # distributional RL
+        # either return p(s,·), log(p(s,·)) or the distributional Q(s,·)
+        if self.__support is not None:
+            logits = qs.view(qs.shape[0], self.__action_no, len(self.support))
+            if probs:
+                return torch.softmax(logits, dim=2)
+            if log_probs:
+                return torch.log_softmax(logits, dim=2)
+            qs_probs = torch.softmax(logits, dim=2)
+            return torch.mul(qs_probs, self.support.expand_as(qs_probs)).sum(2)
+        # or just return Q(s,a)
+        return qs
+
+    @property
+    def support(self):
+        """ Return the support of the Q-Value distribution. """
+        return self.__support
+
+    def get_spectral_norms(self):
+        """ Return the spectral norms of layers hooked on spectral norm. """
+        return {
+            str(idx): layer.weight_sigma.item() for idx, layer in self.__hooked_layers
+        }
+
+    def reset_parameters(self):
+        """ Weight init.
+        """
+        init_ = (
+            nn.init.xavier_uniform_
+            if self.__initializer == "xavier_uniform"
+            else partial(variance_scaling_uniform_, scale=1.0 / sqrt(3.0))
+        )
+
+        for module in self.modules():
+            if isinstance(module, (nn.Linear, nn.Conv2d)):
+                init_(module.weight)
+                module.bias.data.zero_()
+
+    @property
+    def feature_extractor(self):
+        """ Return the feature extractor. """
+        return self.__features
+
+    @property
+    def head(self):
+        """ Return the layers used as heads in Bootstrapped DQN. """
+        return self.__head
+
+    def div_grad_by_rho(self):
+        """ Divide the already computed gradient by the spectral norm.
+        """
+        for module in self.modules():
+            for _, hook in module._forward_pre_hooks.items():
+                if isinstance(hook, (LinearSpectralNorm, Conv2dSpectralNorm)):
+                    assert not hook._active
+                    if hook._leave_smaller:
+                        scale = max(module.weight_sigma.item() / hook._lipschitz_k, 1)
+                    else:
+                        scale = module.weight_sigma.item() / hook._lipschitz_k
+                    with torch.no_grad():
+                        module.weight_orig.grad.data /= scale
+
+
+class MinAtarNet(nn.Module):
+    """ Estimator used for ATARI games.
+    """
+
+    def __init__(  # pylint: disable=bad-continuation
+        self,
+        action_no,
+        input_ch=1,
+        support=None,
+        spectral=None,
+        initializer="xavier_uniform",
+        layer_dims=((16,), (128,)),
+        **kwargs,
+    ):
+        super(MinAtarNet, self).__init__()
+
+        assert initializer in (
+            "xavier_uniform",
+            "variance_scaling_uniform",
+        ), "Only implements xavier_uniform and variance_scaling_uniform."
+
+        self.__action_no = action_no
+        self.__initializer = initializer
+        self.__support = None
+        self.spectral = spectral
+        if support is not None:
+            self.__support = nn.Parameter(
+                torch.linspace(*support), requires_grad=False
+            )  # handy to make it a Parameter so that model.to(device) works
+            out_size = action_no * len(self.__support)
+        else:
+            out_size = action_no
+
+        # configure the net
+        conv_layers, lin_layers = layer_dims
+        feature_extractor, in_ch, out_wh = [], input_ch, 10
+        for out_ch in conv_layers:
+            feature_extractor += [
+                nn.Conv2d(in_ch, out_ch, kernel_size=3, stride=1),
+                nn.ReLU(inplace=True),
+            ]
+            in_ch = out_ch
+            out_wh -= 2  # change this for a different kernel size or stride.
+        self.__features = nn.Sequential(*feature_extractor)
+
+        head, in_size = [], out_wh ** 2 * in_ch
+        for hidden_size in lin_layers:
+            head += [
+                nn.Linear(in_size, hidden_size),
+                nn.ReLU(inplace=True),
+            ]
+            in_size = hidden_size
+        head.append(nn.Linear(in_size, out_size))
+        self.__head = nn.Sequential(*head)
+
+        self.reset_parameters()
+
+        # We allways compute spectral norm except when None or notrace
+        if spectral is not None:
+            self.__hooked_layers = hook_spectral_normalization(
+                spectral,
+                chain(self.__features.named_children(), self.__head.named_children()),
+                **kwargs,
+            )
+
+    def forward(self, x, probs=False, log_probs=False):
+        assert not (probs and log_probs), "Can't output both p(s, a) and log(p(s, a))"
+        # assert x.dtype == torch.uint8, "The model expects states of type ByteTensor"
+        x = x.float()
+        if x.ndimension() == 5:
+            x = x.squeeze(1)  # drop the "history"
+
+        x = self.__features(x)
+        x = x.view(x.size(0), -1)
+        qs = self.__head(x)
+
+        # distributional RL
+        # either return p(s,·), log(p(s,·)) or the distributional Q(s,·)
+        if self.__support is not None:
+            logits = qs.view(qs.shape[0], self.__action_no, len(self.support))
+            if probs:
+                return torch.softmax(logits, dim=2)
+            if log_probs:
+                return torch.log_softmax(logits, dim=2)
+            qs_probs = torch.softmax(logits, dim=2)
+            return torch.mul(qs_probs, self.support.expand_as(qs_probs)).sum(2)
+        # or just return Q(s,a)
+        return qs
+
+    @property
+    def support(self):
+        """ Return the support of the Q-Value distribution. """
+        return self.__support
+
+    def get_spectral_norms(self):
+        """ Return the spectral norms of layers hooked on spectral norm. """
+        return {
+            str(idx): layer.weight_sigma.item() for idx, layer in self.__hooked_layers
+        }
+
+    def div_grad_by_rho(self, mode="per_layer"):
+        """ Divide the already computed gradient by the spectral norm.
+        """
+        if mode == "per_layer" or mode is True:
+            for module in self.modules():
+                for _, hook in module._forward_pre_hooks.items():
+                    if isinstance(hook, (LinearSpectralNorm, Conv2dSpectralNorm)):
+                        assert not hook._active
+                        with torch.no_grad():
+                            module.weight_orig.grad.data *= module.weight_sn_scale
+        elif mode == "all":
+            all_scale = 1
+            for module in self.modules():
+                for _, hook in module._forward_pre_hooks.items():
+                    if isinstance(hook, (LinearSpectralNorm, Conv2dSpectralNorm)):
+                        assert not hook._active
+                        all_scale *= module.weight_sn_scale
+            with torch.no_grad():
+                for param in self.parameters():
+                    if param.grad is not None:
+                        param.grad.data *= all_scale
+        elif mode == "bias_forward":
+            all_scale = 1
+            all_scales = {}
+            for name, module in self.named_modules():
+                for _, hook in module._forward_pre_hooks.items():
+                    if isinstance(hook, (LinearSpectralNorm, Conv2dSpectralNorm)):
+                        assert not hook._active
+                        all_scales[name] = module.weight_sn_scale
+                        all_scale *= module.weight_sn_scale
+            for name, module in self.named_modules():
+                if isinstance(module, (nn.Linear, nn.Conv2d)):
+                    # this is fragile: it assumes head.x > features.y
+                    bias_scale = reduce(
+                        mul, [s for (n, s) in all_scales.items() if n >= name], 1
+                    )
+                    with torch.no_grad():
+                        if hasattr(module, "weight_orig"):
+                            module.weight_orig.grad.data *= all_scale
+                        else:
+                            module.weight.grad.data *= all_scale
+                        module.bias.grad.data *= bias_scale
+        else:
+            raise NotImplementedError
+
+    def reset_parameters(self):
+        """ Weight init.
+        """
+        init_ = (
+            nn.init.xavier_uniform_
+            if self.__initializer == "xavier_uniform"
+            else partial(variance_scaling_uniform_, scale=1.0 / sqrt(3.0))
+        )
+
+        for module in self.modules():
+            if isinstance(module, (nn.Linear, nn.Conv2d)):
+                init_(module.weight)
+                module.bias.data.zero_()
+
+    @property
+    def feature_extractor(self):
+        """ Return the feature extractor. """
+        return self.__features
+
+    @property
+    def head(self):
+        """ Return the layers used as heads in Bootstrapped DQN. """
+        return self.__head

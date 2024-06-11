@@ -1,0 +1,40 @@
+experiment: vk_dlv2  # vKitti_DeepLabV3
+
+step_no: 90000
+val_freq: 5000
+
+seed: 42
+device: cuda
+cudnn_benchmark: yes
+
+log_freq: 20
+verbose: no
+
+model:
+  github: kazuto1011/deeplab-pytorch
+  model: deeplabv2_resnet101
+  pretrained: no
+
+dataset:
+  name: VKITTI
+  root: ./data/vkitti
+  styled: no
+  augmentation:
+    strong: yes
+loader:
+  batch_size: 10
+  num_workers: 10
+  shuffle: yes
+  pin_memory: yes
+
+optim:
+  lr: 0.00025
+  momentum: 0.9
+  weight_decay: 0.0005
+scheduler:
+  step_size: 10
+  power: 0.9
+# cyclic:
+#   lrs: [0.0007, 0.0001]
+#   breaks: 0.5  # break at half-time
+

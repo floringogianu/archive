@@ -1,0 +1,44 @@
+experiment: ssynthia_dlv3  # styled synthia_DeepLabV3
+
+step_no: 90000
+grad_acc_steps: 1  # no of gradient accumulation steps
+val_freq: 2500
+
+seed: 42
+device: cuda
+cudnn_benchmark: yes
+
+log_freq: 20
+verbose: no
+
+model:
+  github: pytorch/vision
+  model: deeplabv3_resnet101
+  pretrained: no
+
+dataset:
+  name: SYNTHIA
+  root: ./data/SYNTHIA_RAND_CITYSCAPES/
+  styled: mixed
+  augmentation:
+    strong: no
+loader:
+  batch_size: 10
+  num_workers: 10
+  shuffle: yes
+  pin_memory: yes
+
+optim:
+  name: SGD
+  per_layer_lr: no
+  args:
+    lr: 0.00025
+    momentum: 0.9
+    weight_decay: 0.0005
+scheduler:
+  step_size: 10
+  power: 0.9
+cyclic:
+  lrs: [0.0007, 0.0001]
+  breaks: 0.5  # break at half-time
+

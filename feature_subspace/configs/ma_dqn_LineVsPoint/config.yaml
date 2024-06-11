@@ -1,0 +1,8 @@
+game: [MinAtar-breakout, MinAtar-asterix, MinAtar-seaquest, MinAtar-space_invaders]
+
+estimator:
+  args_:
+    mode: [point, line]
+    layer_dims:
+      - [[32], [256]]
+      - [[28, 28], [196]]

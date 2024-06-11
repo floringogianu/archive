@@ -1,0 +1,12 @@
+
+game: [humanoid]
+env_no: [1024]
+
+agent:
+  nsteps: [256, 512, 1024]
+  entropy_coeff: [0.01, 0.001, 0.0001]
+  gamma: [0.97]
+
+optim:
+  args_:
+    lr: [0.000100, 0.000032, 0.00001]

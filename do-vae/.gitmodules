@@ -1,0 +1,3 @@
+[submodule "InDomainGeneralizationBenchmark"]
+	path = lib/InDomainGeneralizationBenchmark
+	url = git@github.com:bethgelab/InDomainGeneralizationBenchmark.git

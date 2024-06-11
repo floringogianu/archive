@@ -1,0 +1,10 @@
+# Default hyperparams
+# Follows hyperparams from Dopamine:
+# https://github.com/google/dopamine/blob/master/dopamine/agents/rainbow/configs/c51.gin
+
+game: [MinAtar-breakout, MinAtar-asterix, MinAtar-seaquest, MinAtar-space_invaders]
+
+estimator:
+  args_:
+    spectral: ["-1", "-2", "-3", "-2,-3", "-1,-2,-3"]
+    lipschitz_k: [2, 10]

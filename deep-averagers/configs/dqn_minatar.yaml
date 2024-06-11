@@ -1,0 +1,42 @@
+# DQN Minatar
+
+experiment: DQN
+device: cpu
+save: yes
+replay_save_freq: 10
+
+epoch_cnt: 50
+train_step_cnt: 100000
+valid_step_cnt: 125000
+val_epsilon: 0.001  # validation epsilone greedy
+
+game: MinAtar-space_invaders
+
+agent:
+  name: DQN
+  args_:
+    epsilon: [linear, 1.0, 0.01, 250000, 5000]
+    gamma: 0.99
+    loss_fn: MSELoss
+    update_freq: 4
+    target_update_freq: 4000
+
+replay_:
+  capacity: 100000
+  batch_size: 32
+  hist_len: 1
+  device: cpu
+
+estimator:
+  name: PeriodicMinAtarNet
+  args_:
+    prior: "Matern/Triangle"
+    conv_layers: [24,24]
+    bottleneck_width: 0
+    model_layer_width: 128
+
+optim:
+  name: "Adam"
+  args_:
+    lr: 0.00025
+    eps: 0.0003125

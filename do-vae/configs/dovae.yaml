@@ -1,0 +1,23 @@
+experiment: DoVAE
+device: cuda
+
+dset_name: shapes3d
+trn_steps: 500_000
+val_freq: 10_000
+batch_size: 64
+
+trn_variant: interpolation
+val_variant: extrapolation
+
+beta: 1.0
+rex_coeff: 0.1
+
+model:
+  name: DoVAE
+  args_:
+    zdim: 10
+
+optim:
+  name: "Adam"
+  args_:
+    lr: 0.0001

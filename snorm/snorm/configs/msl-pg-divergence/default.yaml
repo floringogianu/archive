@@ -1,0 +1,33 @@
+# DQN Minatar
+
+experiment: PGDiv
+device: cpu
+
+game: LunarLanderContinuous-v2
+env_no: 8
+
+epochs: 15
+train_step_cnt: 25000  # steps in the *parallel* env
+valid_ep_cnt: 256  # some multiple of env_no
+
+agent:
+  name: PG
+  nsteps: 64
+  batch_size: 512
+  mini_epochs: 1
+  gamma: 0.99
+  entropy_coeff: 0.001
+  clip: 0.2
+  normalize_advantage: yes
+
+estimator:
+  name: ActorCritic
+  args_:
+    layer_dims: [128, 128]
+    spectral: null
+
+optim:
+  name: "Adam"
+  args_:
+    lr: 0.000215
+    eps: 0.00000032

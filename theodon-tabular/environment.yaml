@@ -1,0 +1,17 @@
+name: torch110
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - pip=19.1.1
+  - opencv=3.4.2=py37h6fd60c2_1
+  - python=3.7.3=h0371630_0
+  - pytorch=1.1.0=py3.7_cuda10.0.130_cudnn7.5.1_0
+  - torchvision=0.3.0=py37_cu10.0.130_1
+  - pip:
+    - tb-nightly==1.14.0a20190523
+    - git+git://github.com/floringogianu/gym-classic.git#egg=gym_classic
+    - git+git://github.com/tudor-berariu/liftoff.git#egg=liftoff
+    - git+git://github.com/floringogianu/rlog.git@v0.2.0#egg=rlog
+    - git+git://github.com/floringogianu/wintermute.git#egg=wintermute

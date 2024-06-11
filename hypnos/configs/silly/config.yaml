@@ -1,0 +1,4 @@
+estimator:
+  name: [InverseKinematicsDualNet, InverseKinematicsNet]
+  args_:
+    hidden_size: [256, 512]

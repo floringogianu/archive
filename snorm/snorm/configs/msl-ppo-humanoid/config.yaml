@@ -1,0 +1,9 @@
+# DQN Minatar
+
+agent:
+  reward_scale: [0.1, 1.0]
+  batch_num: [32, 64]
+
+optim:
+  args_:
+    lr: [0.000100, 0.000316, 0.001000]

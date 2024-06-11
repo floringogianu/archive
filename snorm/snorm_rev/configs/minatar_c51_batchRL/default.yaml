@@ -1,0 +1,46 @@
+# DQN Minatar
+
+experiment: BatchRL
+device: cpu
+save: yes
+save_every_replay: yes
+
+epoch_cnt: 50
+train_step_cnt: 100000
+valid_step_cnt: 125000
+val_epsilon: 0.001  # validation epsilone greedy
+
+game: None
+replay_path: None
+replay_cnt: 10
+
+game: MinAtar-breakout
+
+agent:
+  name: C51
+  args_:
+    epsilon: [linear, 1.0, 0.01, 250000, 5000]
+    gamma: 0.99
+    update_freq: 2
+    target_update_freq: 2000
+
+replay_:
+  capacity: 100000
+  batch_size: 32
+  hist_len: 1
+  device: cpu
+
+estimator:
+  name: MinAtarNet
+  args_:
+    layer_dims: [[24, 24],[128]]
+    support: [-10, 10, 51]
+    spectral: null
+    initializer: "xavier_uniform"  # this field can be missing
+
+optim:
+  name: "Adam"
+  div_by_rho: no
+  args_:
+    lr: 0.00025
+    eps: 0.0003125

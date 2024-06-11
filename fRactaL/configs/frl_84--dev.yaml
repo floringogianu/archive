@@ -1,0 +1,5 @@
+title: frl84--test
+
+epochs: 10
+load_root: ./data/FractalDB_84
+batch_size: 256

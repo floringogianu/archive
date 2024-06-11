@@ -1,0 +1,36 @@
+tst_mcs: [16, 32, 64, 128]
+
+_optim:
+  - name: Adam
+    args:
+      lr: 0.01
+      amsgrad: yes
+  - name: Adam
+    args:
+      lr: 0.005
+      amsgrad: yes
+  - name: Adam
+    args:
+      lr: 0.0005
+      amsgrad: yes
+  - name: Rprop
+    args:
+      lr: 0.01
+  - name: Rprop
+    args:
+      lr: 0.005
+  - name: Rprop
+    args:
+      lr: 0.0005
+  - name: RMSprop
+    args:
+      lr: 0.01
+      momentum: 0
+  - name: RMSprop
+    args:
+      lr: 0.005
+      momentum: 0
+  - name: RMSprop
+    args:
+      lr: 0.0005
+      momentum: 0

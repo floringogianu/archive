@@ -1,0 +1,22 @@
+env:
+  args_:
+    name:
+      - CentipedeFour-v2
+      - CentipedeSix-v2
+      - CentipedeEight-v2
+      - CentipedeTen-v2
+      # - CentipedeTwelve-v2
+
+optim:
+  args_:
+    lr: [0.000189, 0.000119, 0.000075, 0.000048]  #, 0.000030, 0.0000189, 0.0000119, 0.0000075, 0.0000048, 0.0000030]
+    eps: [0.0000001]
+
+estimator:
+  args_:
+    layer_dims:
+      - [150, 150]
+      - [256, 256]
+    spectral:
+      - null
+      - {"actor": "-2,-1", "critic": "-2"}

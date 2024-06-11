@@ -1,0 +1,588 @@
+[1mLiftoff 0.3 @ theodon-toy:experiments:93431e7[0m
+
+Will configure experiment in [1m./results/2019Jun28-161323_boot_categorical/[0m
+[1m
+Summary:[0m
+	Sub-experiments: [1m1[0m | New: [1m1[0m | Existing: [1m0[0m
+	Runs: [1m1[0m | New: [1m1[0m | Existing: [1m0[0m | Written: [1m1[0m
+
+Experiment configured in [1m./results/2019Jun28-161323_boot_categorical/[0m
+[1m
+Starting
+[0m
+[1m[31mWarning, for RadialBasisFunction feature extractor you need to install sklearn.[0m No module named 'sklearn'
+16:13:24 [I] SCS9N1-C51: 
+[1m[33mdevice[0m: [37mcuda[0m
+[1m[33mdouble[0m: [37mFalse[0m
+[1m[33mer[0m: 
+  [1m[33malpha[0m: [37m0.8[0m
+  [1m[33masync_memory[0m: [37mFalse[0m
+  [1m[33mbatch_size[0m: [37m32[0m
+  [1m[33mbeta[0m: [37mNone[0m
+  [1m[33mbootstrap_args[0m: [37m[3, 0.8][0m
+  [1m[33mcapacity[0m: [37m100000[0m
+  [1m[33mhist_len[0m: [37m3[0m
+  [1m[33mpriority[0m: [37mbal[0m
+[1m[33mestimator[0m: 
+  [1m[33mcategorical[0m: 
+    [1m[33msupport[0m: 
+      [1m[33mbin_no[0m: [37m51[0m
+      [1m[33mmax[0m: [37m2[0m
+      [1m[33mmin[0m: [37m-2[0m
+  [1m[33mensemble[0m: 
+    [1m[33mB[0m: [37m3[0m
+    [1m[33mfull[0m: [37mTrue[0m
+  [1m[33mff[0m: [37mTrue[0m
+  [1m[33mlin_size[0m: [37m24[0m
+[1m[33mexploration[0m: 
+  [1m[33mend[0m: [37m0.1[0m
+  [1m[33mname[0m: [37mlinear[0m
+  [1m[33mstart[0m: [37m1.0[0m
+  [1m[33msteps[0m: [37m100000[0m
+[1m[33mgame[0m: [37mMiniGrid-SimpleCrossingS9N1-v0[0m
+[1m[33mgamma[0m: [37m0.92[0m
+[1m[33mlr[0m: [37m0.0005[0m
+[1m[33mout_dir[0m: [37m./results/2019Jun28-161323_boot_categorical/0000_boot_categorical/0[0m
+[1m[33mrun_id[0m: [37m0[0m
+[1m[33mseed[0m: [37m[5200, 5608, 2011, 2038, 2766][0m
+[1m[33mstart_learning[0m: [37m10000[0m
+[1m[33mtarget_update[0m: [37m500[0m
+[1m[33mtest_render[0m: [37mFalse[0m
+[1m[33mtest_steps[0m: [37m30000[0m
+[1m[33mtitle[0m: [37mboot_categorical[0m
+[1m[33mtrain_steps[0m: [37m2000000[0m
+[1m[33mupdate_freq[0m: [37m4[0m
+[1m[33mexperiment[0m: [37mSCS9N1-C51[0m
+
+WARNING! Bootstrapping mask is sampled at every step!
+16:13:26 [I] SCS9N1-C51: 
+DQNPolicy(
+  | BootstrappedPE(strategy=vote)
+  | <src.policies.BootstrappedPI object at 0x7f2b255b9320>
+  | ProportionalExperienceReplay(capacity=100000, size=0, α=0.8, β=None, batch=32, async=False)
+  | priority=bal
+)
+16:13:26 [I] SCS9N1-C51: BootstrappedEstimator(N=3, f=MiniGridFF(
+  (lin0): Linear(in_features=441, out_features=24, bias=True)
+  (lin1): Linear(in_features=24, out_features=357, bias=True)
+))
+16:13:42 [I] SCS9N1-C51.train: [   10000/      32] R/ep=  0.05
+             | steps/ep=312.50, fps=17455.33.
+16:14:47 [I] SCS9N1-C51.train: [   20000/      63] R/ep=  0.03
+             | steps/ep=322.58, fps= 4978.22.
+16:15:52 [I] SCS9N1-C51.train: [   30000/      98] R/ep=  0.13
+             | steps/ep=285.71, fps= 4972.25.
+16:16:58 [I] SCS9N1-C51.train: [   40000/     131] R/ep=  0.05
+             | steps/ep=303.03, fps= 4903.86.
+16:18:01 [I] SCS9N1-C51.train: [   50000/     170] R/ep=  0.24
+             | steps/ep=256.41, fps= 5092.17.
+16:18:01 [I] SCS9N1-C51.test: Test agent after 50000 training steps.
+16:18:49 [I] SCS9N1-C51.test: [   30062/      98] R/ep=  0.06
+             | steps/ep=306.76, fps=  621.76, maxq=  0.04.
+16:19:54 [I] SCS9N1-C51.train: [   60000/     217] R/ep=  0.37
+             | steps/ep=212.77, fps= 2827.87.
+16:21:02 [I] SCS9N1-C51.train: [   70000/     264] R/ep=  0.35
+             | steps/ep=212.77, fps= 4725.50.
+16:22:11 [I] SCS9N1-C51.train: [   80000/     320] R/ep=  0.46
+             | steps/ep=178.57, fps= 4628.37.
+16:23:14 [I] SCS9N1-C51.train: [   90000/     373] R/ep=  0.44
+             | steps/ep=188.68, fps= 5111.19.
+16:24:20 [I] SCS9N1-C51.train: [  100000/     424] R/ep=  0.41
+             | steps/ep=196.08, fps= 4837.35.
+16:24:20 [I] SCS9N1-C51.test: Test agent after 100000 training steps.
+16:25:10 [I] SCS9N1-C51.test: [   30256/     194] R/ep=  0.03
+             | steps/ep=315.17, fps=  606.75, maxq=  0.67.
+16:26:17 [I] SCS9N1-C51.train: [  110000/     479] R/ep=  0.45
+             | steps/ep=181.82, fps= 2732.16.
+16:27:27 [I] SCS9N1-C51.train: [  120000/     526] R/ep=  0.37
+             | steps/ep=212.77, fps= 4576.78.
+16:28:30 [I] SCS9N1-C51.train: [  130000/     571] R/ep=  0.32
+             | steps/ep=222.22, fps= 5125.86.
+16:29:35 [I] SCS9N1-C51.train: [  140000/     623] R/ep=  0.40
+             | steps/ep=192.31, fps= 4863.39.
+16:30:43 [I] SCS9N1-C51.train: [  150000/     683] R/ep=  0.51
+             | steps/ep=166.67, fps= 4738.69.
+16:30:43 [I] SCS9N1-C51.test: Test agent after 150000 training steps.
+16:31:33 [I] SCS9N1-C51.test: [   30030/     348] R/ep=  0.40
+             | steps/ep=195.00, fps=  600.55, maxq=  0.84.
+16:32:38 [I] SCS9N1-C51.train: [  160000/     771] R/ep=  0.65
+             | steps/ep=113.64, fps= 2790.26.
+16:33:43 [I] SCS9N1-C51.train: [  170000/     895] R/ep=  0.75
+             | steps/ep= 80.65, fps= 4886.27.
+16:34:54 [I] SCS9N1-C51.train: [  180000/    1036] R/ep=  0.79
+             | steps/ep= 70.92, fps= 4561.16.
+16:36:02 [I] SCS9N1-C51.train: [  190000/    1423] R/ep=  0.92
+             | steps/ep= 25.84, fps= 4703.15.
+16:37:13 [I] SCS9N1-C51.train: [  200000/    1943] R/ep=  0.95
+             | steps/ep= 19.23, fps= 4517.31.
+16:37:13 [I] SCS9N1-C51.test: Test agent after 200000 training steps.
+16:38:06 [I] SCS9N1-C51.test: [   30019/    2079] R/ep=  0.95
+             | steps/ep= 17.34, fps=  573.63, maxq=  0.94.
+16:39:07 [I] SCS9N1-C51.train: [  210000/    2416] R/ep=  0.94
+             | steps/ep= 21.14, fps= 2808.42.
+16:40:13 [I] SCS9N1-C51.train: [  220000/    2812] R/ep=  0.93
+             | steps/ep= 25.25, fps= 4883.79.
+16:41:17 [I] SCS9N1-C51.train: [  230000/    3270] R/ep=  0.94
+             | steps/ep= 21.83, fps= 4985.29.
+16:42:21 [I] SCS9N1-C51.train: [  240000/    3818] R/ep=  0.95
+             | steps/ep= 18.25, fps= 4965.89.
+16:43:29 [I] SCS9N1-C51.train: [  250000/    4392] R/ep=  0.95
+             | steps/ep= 17.42, fps= 4743.66.
+16:43:30 [I] SCS9N1-C51.test: Test agent after 250000 training steps.
+16:44:20 [I] SCS9N1-C51.test: [   30010/    4053] R/ep=  0.96
+             | steps/ep= 15.20, fps=  594.89, maxq=  0.95.
+16:45:27 [I] SCS9N1-C51.train: [  260000/    4970] R/ep=  0.95
+             | steps/ep= 17.30, fps= 2735.55.
+16:46:30 [I] SCS9N1-C51.train: [  270000/    5541] R/ep=  0.95
+             | steps/ep= 17.51, fps= 5031.68.
+16:47:32 [I] SCS9N1-C51.train: [  280000/    6141] R/ep=  0.95
+             | steps/ep= 16.67, fps= 5212.45.
+16:48:40 [I] SCS9N1-C51.train: [  290000/    6718] R/ep=  0.95
+             | steps/ep= 17.33, fps= 4686.25.
+16:49:50 [I] SCS9N1-C51.train: [  300000/    7287] R/ep=  0.95
+             | steps/ep= 17.57, fps= 4610.38.
+16:49:50 [I] SCS9N1-C51.test: Test agent after 300000 training steps.
+16:50:42 [I] SCS9N1-C51.test: [   30003/    6106] R/ep=  0.96
+             | steps/ep= 14.61, fps=  581.91, maxq=  0.96.
+16:51:54 [I] SCS9N1-C51.train: [  310000/    7845] R/ep=  0.95
+             | steps/ep= 17.92, fps= 2596.14.
+16:53:01 [I] SCS9N1-C51.train: [  320000/    8391] R/ep=  0.95
+             | steps/ep= 18.32, fps= 4761.01.
+16:54:10 [I] SCS9N1-C51.train: [  330000/    8929] R/ep=  0.95
+             | steps/ep= 18.59, fps= 4648.54.
+16:55:18 [I] SCS9N1-C51.train: [  340000/    9473] R/ep=  0.95
+             | steps/ep= 18.38, fps= 4751.50.
+16:56:25 [I] SCS9N1-C51.train: [  350000/   10042] R/ep=  0.95
+             | steps/ep= 17.57, fps= 4766.63.
+16:56:26 [I] SCS9N1-C51.test: Test agent after 350000 training steps.
+16:57:17 [I] SCS9N1-C51.test: [   30010/    8162] R/ep=  0.96
+             | steps/ep= 14.60, fps=  584.28, maxq=  0.95.
+16:58:23 [I] SCS9N1-C51.train: [  360000/   10601] R/ep=  0.95
+             | steps/ep= 17.89, fps= 2725.59.
+16:59:29 [I] SCS9N1-C51.train: [  370000/   11180] R/ep=  0.95
+             | steps/ep= 17.27, fps= 4869.81.
+17:00:37 [I] SCS9N1-C51.train: [  380000/   11773] R/ep=  0.95
+             | steps/ep= 16.86, fps= 4668.74.
+17:01:46 [I] SCS9N1-C51.train: [  390000/   12368] R/ep=  0.95
+             | steps/ep= 16.81, fps= 4649.29.
+17:02:54 [I] SCS9N1-C51.train: [  400000/   12929] R/ep=  0.95
+             | steps/ep= 17.83, fps= 4748.12.
+17:02:55 [I] SCS9N1-C51.test: Test agent after 400000 training steps.
+17:03:46 [I] SCS9N1-C51.test: [   30003/    9991] R/ep=  0.95
+             | steps/ep= 16.40, fps=  579.89, maxq=  0.95.
+17:04:51 [I] SCS9N1-C51.train: [  410000/   13534] R/ep=  0.95
+             | steps/ep= 16.53, fps= 2741.41.
+17:06:00 [I] SCS9N1-C51.train: [  420000/   14122] R/ep=  0.95
+             | steps/ep= 17.01, fps= 4711.85.
+17:07:05 [I] SCS9N1-C51.train: [  430000/   14696] R/ep=  0.95
+             | steps/ep= 17.42, fps= 4893.64.
+17:08:13 [I] SCS9N1-C51.train: [  440000/   15292] R/ep=  0.95
+             | steps/ep= 16.78, fps= 4705.25.
+17:09:17 [I] SCS9N1-C51.train: [  450000/   15871] R/ep=  0.95
+             | steps/ep= 17.27, fps= 4999.63.
+17:09:17 [I] SCS9N1-C51.test: Test agent after 450000 training steps.
+17:10:08 [I] SCS9N1-C51.test: [   30004/   11859] R/ep=  0.96
+             | steps/ep= 16.06, fps=  596.48, maxq=  0.95.
+17:11:14 [I] SCS9N1-C51.train: [  460000/   16451] R/ep=  0.95
+             | steps/ep= 17.24, fps= 2749.59.
+17:12:21 [I] SCS9N1-C51.train: [  470000/   17052] R/ep=  0.95
+             | steps/ep= 16.64, fps= 4806.63.
+17:13:24 [I] SCS9N1-C51.train: [  480000/   17635] R/ep=  0.95
+             | steps/ep= 17.15, fps= 5044.38.
+17:14:30 [I] SCS9N1-C51.train: [  490000/   18221] R/ep=  0.95
+             | steps/ep= 17.06, fps= 4824.43.
+17:15:40 [I] SCS9N1-C51.train: [  500000/   18788] R/ep=  0.95
+             | steps/ep= 17.64, fps= 4590.75.
+17:15:40 [I] SCS9N1-C51.test: Test agent after 500000 training steps.
+17:16:32 [I] SCS9N1-C51.test: [   30006/   13812] R/ep=  0.96
+             | steps/ep= 15.36, fps=  584.96, maxq=  0.95.
+17:17:41 [I] SCS9N1-C51.train: [  510000/   19356] R/ep=  0.95
+             | steps/ep= 17.61, fps= 2640.49.
+17:18:52 [I] SCS9N1-C51.train: [  520000/   19913] R/ep=  0.95
+             | steps/ep= 17.95, fps= 4539.94.
+17:19:59 [I] SCS9N1-C51.train: [  530000/   20475] R/ep=  0.95
+             | steps/ep= 17.79, fps= 4854.19.
+17:21:03 [I] SCS9N1-C51.train: [  540000/   21047] R/ep=  0.95
+             | steps/ep= 17.48, fps= 4989.87.
+17:22:10 [I] SCS9N1-C51.train: [  550000/   21608] R/ep=  0.95
+             | steps/ep= 17.83, fps= 4774.63.
+17:22:10 [I] SCS9N1-C51.test: Test agent after 550000 training steps.
+17:23:02 [I] SCS9N1-C51.test: [   30010/   15867] R/ep=  0.96
+             | steps/ep= 14.60, fps=  579.87, maxq=  0.95.
+17:24:11 [I] SCS9N1-C51.train: [  560000/   22178] R/ep=  0.95
+             | steps/ep= 17.54, fps= 2643.02.
+17:25:18 [I] SCS9N1-C51.train: [  570000/   22722] R/ep=  0.95
+             | steps/ep= 18.38, fps= 4802.75.
+17:26:25 [I] SCS9N1-C51.train: [  580000/   23269] R/ep=  0.95
+             | steps/ep= 18.28, fps= 4776.06.
+17:27:29 [I] SCS9N1-C51.train: [  590000/   23836] R/ep=  0.95
+             | steps/ep= 17.64, fps= 4957.75.
+17:28:35 [I] SCS9N1-C51.train: [  600000/   24370] R/ep=  0.95
+             | steps/ep= 18.73, fps= 4842.66.
+17:28:35 [I] SCS9N1-C51.test: Test agent after 600000 training steps.
+17:29:26 [I] SCS9N1-C51.test: [   30008/   17759] R/ep=  0.96
+             | steps/ep= 15.86, fps=  590.78, maxq=  0.95.
+17:30:33 [I] SCS9N1-C51.train: [  610000/   24904] R/ep=  0.95
+             | steps/ep= 18.73, fps= 2720.79.
+17:31:40 [I] SCS9N1-C51.train: [  620000/   25454] R/ep=  0.95
+             | steps/ep= 18.18, fps= 4769.44.
+17:32:47 [I] SCS9N1-C51.train: [  630000/   25995] R/ep=  0.95
+             | steps/ep= 18.48, fps= 4815.88.
+17:33:53 [I] SCS9N1-C51.train: [  640000/   26564] R/ep=  0.95
+             | steps/ep= 17.57, fps= 4796.74.
+17:35:02 [I] SCS9N1-C51.train: [  650000/   27131] R/ep=  0.95
+             | steps/ep= 17.64, fps= 4695.77.
+17:35:02 [I] SCS9N1-C51.test: Test agent after 650000 training steps.
+17:35:52 [I] SCS9N1-C51.test: [   30005/   19654] R/ep=  0.96
+             | steps/ep= 15.83, fps=  591.01, maxq=  0.95.
+17:37:02 [I] SCS9N1-C51.train: [  660000/   27679] R/ep=  0.95
+             | steps/ep= 18.25, fps= 2666.77.
+17:38:07 [I] SCS9N1-C51.train: [  670000/   28212] R/ep=  0.95
+             | steps/ep= 18.76, fps= 4897.91.
+17:39:15 [I] SCS9N1-C51.train: [  680000/   28787] R/ep=  0.95
+             | steps/ep= 17.39, fps= 4690.27.
+17:40:24 [I] SCS9N1-C51.train: [  690000/   29357] R/ep=  0.95
+             | steps/ep= 17.54, fps= 4706.50.
+17:41:29 [I] SCS9N1-C51.train: [  700000/   29927] R/ep=  0.95
+             | steps/ep= 17.54, fps= 4936.12.
+17:41:29 [I] SCS9N1-C51.test: Test agent after 700000 training steps.
+17:42:21 [I] SCS9N1-C51.test: [   30012/   21715] R/ep=  0.96
+             | steps/ep= 14.56, fps=  575.25, maxq=  0.95.
+17:43:27 [I] SCS9N1-C51.train: [  710000/   30496] R/ep=  0.95
+             | steps/ep= 17.57, fps= 2703.99.
+17:44:34 [I] SCS9N1-C51.train: [  720000/   31076] R/ep=  0.95
+             | steps/ep= 17.24, fps= 4751.06.
+17:45:40 [I] SCS9N1-C51.train: [  730000/   31649] R/ep=  0.95
+             | steps/ep= 17.45, fps= 4894.83.
+17:46:43 [I] SCS9N1-C51.train: [  740000/   32181] R/ep=  0.95
+             | steps/ep= 18.80, fps= 5020.04.
+17:47:49 [I] SCS9N1-C51.train: [  750000/   32743] R/ep=  0.95
+             | steps/ep= 17.79, fps= 4918.88.
+17:47:49 [I] SCS9N1-C51.test: Test agent after 750000 training steps.
+17:48:40 [I] SCS9N1-C51.test: [   30011/   23448] R/ep=  0.95
+             | steps/ep= 17.32, fps=  594.48, maxq=  0.95.
+17:49:44 [I] SCS9N1-C51.train: [  760000/   33309] R/ep=  0.95
+             | steps/ep= 17.67, fps= 2783.43.
+17:50:48 [I] SCS9N1-C51.train: [  770000/   33898] R/ep=  0.95
+             | steps/ep= 16.98, fps= 5029.75.
+17:51:54 [I] SCS9N1-C51.train: [  780000/   34485] R/ep=  0.95
+             | steps/ep= 17.04, fps= 4892.06.
+17:53:01 [I] SCS9N1-C51.train: [  790000/   35062] R/ep=  0.95
+             | steps/ep= 17.33, fps= 4757.23.
+17:54:08 [I] SCS9N1-C51.train: [  800000/   35637] R/ep=  0.95
+             | steps/ep= 17.39, fps= 4822.11.
+17:54:08 [I] SCS9N1-C51.test: Test agent after 800000 training steps.
+17:54:58 [I] SCS9N1-C51.test: [   30011/   25353] R/ep=  0.96
+             | steps/ep= 15.75, fps=  595.67, maxq=  0.95.
+17:56:05 [I] SCS9N1-C51.train: [  810000/   36223] R/ep=  0.95
+             | steps/ep= 17.06, fps= 2722.99.
+17:57:09 [I] SCS9N1-C51.train: [  820000/   36802] R/ep=  0.95
+             | steps/ep= 17.27, fps= 4999.50.
+17:58:17 [I] SCS9N1-C51.train: [  830000/   37376] R/ep=  0.95
+             | steps/ep= 17.42, fps= 4733.98.
+17:59:26 [I] SCS9N1-C51.train: [  840000/   37948] R/ep=  0.95
+             | steps/ep= 17.48, fps= 4648.54.
+18:00:32 [I] SCS9N1-C51.train: [  850000/   38516] R/ep=  0.95
+             | steps/ep= 17.61, fps= 4821.52.
+18:00:32 [I] SCS9N1-C51.test: Test agent after 850000 training steps.
+18:01:24 [I] SCS9N1-C51.test: [   30005/   27408] R/ep=  0.96
+             | steps/ep= 14.60, fps=  584.33, maxq=  0.95.
+18:02:29 [I] SCS9N1-C51.train: [  860000/   39104] R/ep=  0.95
+             | steps/ep= 17.01, fps= 2741.67.
+18:03:37 [I] SCS9N1-C51.train: [  870000/   39675] R/ep=  0.95
+             | steps/ep= 17.51, fps= 4786.89.
+18:04:42 [I] SCS9N1-C51.train: [  880000/   40229] R/ep=  0.95
+             | steps/ep= 18.05, fps= 4918.29.
+18:05:45 [I] SCS9N1-C51.train: [  890000/   40784] R/ep=  0.95
+             | steps/ep= 18.02, fps= 5091.99.
+18:06:47 [I] SCS9N1-C51.train: [  900000/   41350] R/ep=  0.95
+             | steps/ep= 17.67, fps= 5121.05.
+18:06:48 [I] SCS9N1-C51.test: Test agent after 900000 training steps.
+18:07:38 [I] SCS9N1-C51.test: [   30008/   29245] R/ep=  0.95
+             | steps/ep= 16.34, fps=  595.71, maxq=  0.96.
+18:08:38 [I] SCS9N1-C51.train: [  910000/   41929] R/ep=  0.95
+             | steps/ep= 17.27, fps= 2904.40.
+18:09:44 [I] SCS9N1-C51.train: [  920000/   42517] R/ep=  0.95
+             | steps/ep= 17.01, fps= 4878.75.
+18:10:52 [I] SCS9N1-C51.train: [  930000/   43103] R/ep=  0.95
+             | steps/ep= 17.06, fps= 4665.08.
+18:11:52 [I] SCS9N1-C51.train: [  940000/   43679] R/ep=  0.95
+             | steps/ep= 17.36, fps= 5321.46.
+18:12:55 [I] SCS9N1-C51.train: [  950000/   44265] R/ep=  0.95
+             | steps/ep= 17.06, fps= 5133.94.
+18:12:55 [I] SCS9N1-C51.test: Test agent after 950000 training steps.
+18:13:47 [I] SCS9N1-C51.test: [   30006/   31310] R/ep=  0.96
+             | steps/ep= 14.53, fps=  587.75, maxq=  0.95.
+18:14:50 [I] SCS9N1-C51.train: [  960000/   44851] R/ep=  0.95
+             | steps/ep= 17.06, fps= 2790.07.
+18:15:57 [I] SCS9N1-C51.train: [  970000/   45452] R/ep=  0.95
+             | steps/ep= 16.64, fps= 4804.85.
+18:17:00 [I] SCS9N1-C51.train: [  980000/   46028] R/ep=  0.95
+             | steps/ep= 17.36, fps= 5107.78.
+18:18:01 [I] SCS9N1-C51.train: [  990000/   46609] R/ep=  0.95
+             | steps/ep= 17.21, fps= 5207.59.
+18:19:08 [I] SCS9N1-C51.train: [ 1000000/   47174] R/ep=  0.95
+             | steps/ep= 17.70, fps= 4823.33.
+18:19:08 [I] SCS9N1-C51.test: Test agent after 1000000 training steps.
+18:19:59 [I] SCS9N1-C51.test: [   30004/   33350] R/ep=  0.96
+             | steps/ep= 14.71, fps=  586.41, maxq=  0.95.
+18:21:01 [I] SCS9N1-C51.train: [ 1010000/   47767] R/ep=  0.95
+             | steps/ep= 16.86, fps= 2817.21.
+18:22:05 [I] SCS9N1-C51.train: [ 1020000/   48360] R/ep=  0.95
+             | steps/ep= 16.86, fps= 5030.96.
+18:23:15 [I] SCS9N1-C51.train: [ 1030000/   48939] R/ep=  0.95
+             | steps/ep= 17.27, fps= 4595.83.
+18:24:23 [I] SCS9N1-C51.train: [ 1040000/   49526] R/ep=  0.95
+             | steps/ep= 17.04, fps= 4699.58.
+18:25:31 [I] SCS9N1-C51.train: [ 1050000/   50101] R/ep=  0.95
+             | steps/ep= 17.39, fps= 4684.07.
+18:25:31 [I] SCS9N1-C51.test: Test agent after 1050000 training steps.
+18:26:21 [I] SCS9N1-C51.test: [   30011/   35248] R/ep=  0.96
+             | steps/ep= 15.81, fps=  599.75, maxq=  0.96.
+18:27:22 [I] SCS9N1-C51.train: [ 1060000/   50682] R/ep=  0.95
+             | steps/ep= 17.21, fps= 2894.55.
+18:28:28 [I] SCS9N1-C51.train: [ 1070000/   51271] R/ep=  0.95
+             | steps/ep= 16.98, fps= 4825.91.
+18:29:35 [I] SCS9N1-C51.train: [ 1080000/   51844] R/ep=  0.95
+             | steps/ep= 17.45, fps= 4822.80.
+18:30:39 [I] SCS9N1-C51.train: [ 1090000/   52419] R/ep=  0.95
+             | steps/ep= 17.39, fps= 4964.40.
+18:31:45 [I] SCS9N1-C51.train: [ 1100000/   53008] R/ep=  0.95
+             | steps/ep= 16.98, fps= 4827.04.
+18:31:46 [I] SCS9N1-C51.test: Test agent after 1100000 training steps.
+18:32:37 [I] SCS9N1-C51.test: [   30003/   37151] R/ep=  0.96
+             | steps/ep= 15.77, fps=  579.96, maxq=  0.96.
+18:33:42 [I] SCS9N1-C51.train: [ 1110000/   53577] R/ep=  0.95
+             | steps/ep= 17.57, fps= 2749.80.
+18:34:52 [I] SCS9N1-C51.train: [ 1120000/   54120] R/ep=  0.95
+             | steps/ep= 18.42, fps= 4583.95.
+18:35:58 [I] SCS9N1-C51.train: [ 1130000/   54692] R/ep=  0.95
+             | steps/ep= 17.48, fps= 4828.32.
+18:37:07 [I] SCS9N1-C51.train: [ 1140000/   55257] R/ep=  0.95
+             | steps/ep= 17.70, fps= 4660.64.
+18:38:14 [I] SCS9N1-C51.train: [ 1150000/   55813] R/ep=  0.95
+             | steps/ep= 17.99, fps= 4796.03.
+18:38:14 [I] SCS9N1-C51.test: Test agent after 1150000 training steps.
+18:39:05 [I] SCS9N1-C51.test: [   30009/   39040] R/ep=  0.96
+             | steps/ep= 15.89, fps=  587.05, maxq=  0.96.
+18:40:10 [I] SCS9N1-C51.train: [ 1160000/   56403] R/ep=  0.95
+             | steps/ep= 16.95, fps= 2765.78.
+18:41:17 [I] SCS9N1-C51.train: [ 1170000/   56985] R/ep=  0.95
+             | steps/ep= 17.18, fps= 4783.39.
+18:42:21 [I] SCS9N1-C51.train: [ 1180000/   57586] R/ep=  0.95
+             | steps/ep= 16.64, fps= 5037.39.
+18:43:28 [I] SCS9N1-C51.train: [ 1190000/   58172] R/ep=  0.95
+             | steps/ep= 17.06, fps= 4797.05.
+18:44:35 [I] SCS9N1-C51.train: [ 1200000/   58762] R/ep=  0.95
+             | steps/ep= 16.95, fps= 4781.76.
+18:44:35 [I] SCS9N1-C51.test: Test agent after 1200000 training steps.
+18:45:26 [I] SCS9N1-C51.test: [   30001/   41105] R/ep=  0.96
+             | steps/ep= 14.53, fps=  581.64, maxq=  0.95.
+18:46:31 [I] SCS9N1-C51.train: [ 1210000/   59340] R/ep=  0.95
+             | steps/ep= 17.30, fps= 2740.49.
+18:47:40 [I] SCS9N1-C51.train: [ 1220000/   59927] R/ep=  0.95
+             | steps/ep= 17.04, fps= 4649.89.
+18:48:47 [I] SCS9N1-C51.train: [ 1230000/   60514] R/ep=  0.95
+             | steps/ep= 17.04, fps= 4785.88.
+18:49:54 [I] SCS9N1-C51.train: [ 1240000/   61089] R/ep=  0.95
+             | steps/ep= 17.39, fps= 4849.35.
+18:51:02 [I] SCS9N1-C51.train: [ 1250000/   61667] R/ep=  0.95
+             | steps/ep= 17.30, fps= 4666.84.
+18:51:03 [I] SCS9N1-C51.test: Test agent after 1250000 training steps.
+18:51:54 [I] SCS9N1-C51.test: [   30000/   43161] R/ep=  0.96
+             | steps/ep= 14.59, fps=  583.96, maxq=  0.96.
+18:53:01 [I] SCS9N1-C51.train: [ 1260000/   62261] R/ep=  0.95
+             | steps/ep= 16.84, fps= 2700.40.
+18:54:06 [I] SCS9N1-C51.train: [ 1270000/   62821] R/ep=  0.95
+             | steps/ep= 17.86, fps= 4965.69.
+18:55:09 [I] SCS9N1-C51.train: [ 1280000/   63393] R/ep=  0.95
+             | steps/ep= 17.48, fps= 5045.79.
+18:56:16 [I] SCS9N1-C51.train: [ 1290000/   63984] R/ep=  0.95
+             | steps/ep= 16.92, fps= 4768.31.
+18:57:23 [I] SCS9N1-C51.train: [ 1300000/   64555] R/ep=  0.95
+             | steps/ep= 17.51, fps= 4809.46.
+18:57:23 [I] SCS9N1-C51.test: Test agent after 1300000 training steps.
+18:58:14 [I] SCS9N1-C51.test: [   30011/   45217] R/ep=  0.96
+             | steps/ep= 14.60, fps=  584.97, maxq=  0.96.
+18:59:18 [I] SCS9N1-C51.train: [ 1310000/   65134] R/ep=  0.95
+             | steps/ep= 17.27, fps= 2784.45.
+19:00:26 [I] SCS9N1-C51.train: [ 1320000/   65729] R/ep=  0.95
+             | steps/ep= 16.81, fps= 4740.86.
+19:01:33 [I] SCS9N1-C51.train: [ 1330000/   66333] R/ep=  0.95
+             | steps/ep= 16.56, fps= 4722.61.
+19:02:40 [I] SCS9N1-C51.train: [ 1340000/   66930] R/ep=  0.95
+             | steps/ep= 16.75, fps= 4798.65.
+19:03:42 [I] SCS9N1-C51.train: [ 1350000/   67526] R/ep=  0.95
+             | steps/ep= 16.78, fps= 5166.65.
+19:03:42 [I] SCS9N1-C51.test: Test agent after 1350000 training steps.
+19:04:33 [I] SCS9N1-C51.test: [   30007/   47278] R/ep=  0.96
+             | steps/ep= 14.56, fps=  586.62, maxq=  0.96.
+19:05:40 [I] SCS9N1-C51.train: [ 1360000/   68121] R/ep=  0.95
+             | steps/ep= 16.81, fps= 2720.28.
+19:06:41 [I] SCS9N1-C51.train: [ 1370000/   68712] R/ep=  0.95
+             | steps/ep= 16.92, fps= 5234.46.
+19:07:46 [I] SCS9N1-C51.train: [ 1380000/   69289] R/ep=  0.95
+             | steps/ep= 17.33, fps= 4910.04.
+19:08:45 [I] SCS9N1-C51.train: [ 1390000/   69867] R/ep=  0.95
+             | steps/ep= 17.30, fps= 5427.39.
+19:09:53 [I] SCS9N1-C51.train: [ 1400000/   70428] R/ep=  0.95
+             | steps/ep= 17.83, fps= 4701.66.
+19:09:53 [I] SCS9N1-C51.test: Test agent after 1400000 training steps.
+19:10:45 [I] SCS9N1-C51.test: [   30000/   49363] R/ep=  0.96
+             | steps/ep= 14.39, fps=  584.98, maxq=  0.96.
+19:11:52 [I] SCS9N1-C51.train: [ 1410000/   71014] R/ep=  0.95
+             | steps/ep= 17.06, fps= 2705.52.
+19:12:58 [I] SCS9N1-C51.train: [ 1420000/   71592] R/ep=  0.95
+             | steps/ep= 17.30, fps= 4799.77.
+19:14:05 [I] SCS9N1-C51.train: [ 1430000/   72182] R/ep=  0.95
+             | steps/ep= 16.95, fps= 4829.04.
+19:15:13 [I] SCS9N1-C51.train: [ 1440000/   72780] R/ep=  0.95
+             | steps/ep= 16.72, fps= 4665.07.
+19:16:25 [I] SCS9N1-C51.train: [ 1450000/   73369] R/ep=  0.95
+             | steps/ep= 16.98, fps= 4496.70.
+19:16:25 [I] SCS9N1-C51.test: Test agent after 1450000 training steps.
+19:17:15 [I] SCS9N1-C51.test: [   30000/   51447] R/ep=  0.96
+             | steps/ep= 14.40, fps=  595.69, maxq=  0.96.
+19:18:25 [I] SCS9N1-C51.train: [ 1460000/   73936] R/ep=  0.95
+             | steps/ep= 17.64, fps= 2651.51.
+19:19:32 [I] SCS9N1-C51.train: [ 1470000/   74521] R/ep=  0.95
+             | steps/ep= 17.09, fps= 4809.74.
+19:20:38 [I] SCS9N1-C51.train: [ 1480000/   75117] R/ep=  0.95
+             | steps/ep= 16.78, fps= 4868.76.
+19:21:44 [I] SCS9N1-C51.train: [ 1490000/   75709] R/ep=  0.95
+             | steps/ep= 16.89, fps= 4805.48.
+19:22:48 [I] SCS9N1-C51.train: [ 1500000/   76284] R/ep=  0.95
+             | steps/ep= 17.39, fps= 5027.15.
+19:22:49 [I] SCS9N1-C51.test: Test agent after 1500000 training steps.
+19:23:40 [I] SCS9N1-C51.test: [   30011/   53465] R/ep=  0.96
+             | steps/ep= 14.87, fps=  584.91, maxq=  0.95.
+19:24:47 [I] SCS9N1-C51.train: [ 1510000/   76863] R/ep=  0.95
+             | steps/ep= 17.27, fps= 2706.52.
+19:25:54 [I] SCS9N1-C51.train: [ 1520000/   77429] R/ep=  0.95
+             | steps/ep= 17.67, fps= 4813.12.
+19:26:59 [I] SCS9N1-C51.train: [ 1530000/   78017] R/ep=  0.95
+             | steps/ep= 17.01, fps= 4896.36.
+19:28:06 [I] SCS9N1-C51.train: [ 1540000/   78607] R/ep=  0.95
+             | steps/ep= 16.95, fps= 4803.91.
+19:29:10 [I] SCS9N1-C51.train: [ 1550000/   79170] R/ep=  0.95
+             | steps/ep= 17.76, fps= 4964.35.
+19:29:11 [I] SCS9N1-C51.test: Test agent after 1550000 training steps.
+19:30:01 [I] SCS9N1-C51.test: [   30000/   55526] R/ep=  0.96
+             | steps/ep= 14.56, fps=  593.91, maxq=  0.96.
+19:31:08 [I] SCS9N1-C51.train: [ 1560000/   79766] R/ep=  0.95
+             | steps/ep= 16.78, fps= 2733.50.
+19:32:09 [I] SCS9N1-C51.train: [ 1570000/   80365] R/ep=  0.95
+             | steps/ep= 16.69, fps= 5176.44.
+19:33:15 [I] SCS9N1-C51.train: [ 1580000/   80966] R/ep=  0.95
+             | steps/ep= 16.64, fps= 4917.59.
+19:34:20 [I] SCS9N1-C51.train: [ 1590000/   81565] R/ep=  0.95
+             | steps/ep= 16.69, fps= 4856.54.
+19:35:27 [I] SCS9N1-C51.train: [ 1600000/   82149] R/ep=  0.95
+             | steps/ep= 17.12, fps= 4790.36.
+19:35:27 [I] SCS9N1-C51.test: Test agent after 1600000 training steps.
+19:36:19 [I] SCS9N1-C51.test: [   30013/   57516] R/ep=  0.96
+             | steps/ep= 15.08, fps=  583.04, maxq=  0.95.
+19:37:30 [I] SCS9N1-C51.train: [ 1610000/   82757] R/ep=  0.95
+             | steps/ep= 16.45, fps= 2620.60.
+19:38:35 [I] SCS9N1-C51.train: [ 1620000/   83354] R/ep=  0.95
+             | steps/ep= 16.75, fps= 4895.45.
+19:39:42 [I] SCS9N1-C51.train: [ 1630000/   83962] R/ep=  0.95
+             | steps/ep= 16.45, fps= 4781.52.
+19:40:46 [I] SCS9N1-C51.train: [ 1640000/   84565] R/ep=  0.95
+             | steps/ep= 16.58, fps= 4978.00.
+19:41:52 [I] SCS9N1-C51.train: [ 1650000/   85171] R/ep=  0.95
+             | steps/ep= 16.50, fps= 4916.24.
+19:41:52 [I] SCS9N1-C51.test: Test agent after 1650000 training steps.
+19:42:43 [I] SCS9N1-C51.test: [   30004/   59422] R/ep=  0.96
+             | steps/ep= 15.74, fps=  580.66, maxq=  0.96.
+19:43:53 [I] SCS9N1-C51.train: [ 1660000/   85778] R/ep=  0.95
+             | steps/ep= 16.47, fps= 2643.18.
+19:44:57 [I] SCS9N1-C51.train: [ 1670000/   86384] R/ep=  0.95
+             | steps/ep= 16.50, fps= 4946.45.
+19:46:03 [I] SCS9N1-C51.train: [ 1680000/   86988] R/ep=  0.95
+             | steps/ep= 16.56, fps= 4857.77.
+19:47:11 [I] SCS9N1-C51.train: [ 1690000/   87596] R/ep=  0.95
+             | steps/ep= 16.45, fps= 4763.55.
+19:48:14 [I] SCS9N1-C51.train: [ 1700000/   88194] R/ep=  0.95
+             | steps/ep= 16.72, fps= 5077.60.
+19:48:14 [I] SCS9N1-C51.test: Test agent after 1700000 training steps.
+19:49:04 [I] SCS9N1-C51.test: [   30006/   61462] R/ep=  0.96
+             | steps/ep= 14.71, fps=  596.35, maxq=  0.96.
+19:50:09 [I] SCS9N1-C51.train: [ 1710000/   88795] R/ep=  0.95
+             | steps/ep= 16.64, fps= 2778.61.
+19:51:17 [I] SCS9N1-C51.train: [ 1720000/   89394] R/ep=  0.95
+             | steps/ep= 16.69, fps= 4767.51.
+19:52:21 [I] SCS9N1-C51.train: [ 1730000/   90002] R/ep=  0.95
+             | steps/ep= 16.45, fps= 5016.77.
+19:53:27 [I] SCS9N1-C51.train: [ 1740000/   90604] R/ep=  0.95
+             | steps/ep= 16.61, fps= 4853.22.
+19:54:35 [I] SCS9N1-C51.train: [ 1750000/   91213] R/ep=  0.95
+             | steps/ep= 16.42, fps= 4681.15.
+19:54:35 [I] SCS9N1-C51.test: Test agent after 1750000 training steps.
+19:55:27 [I] SCS9N1-C51.test: [   30013/   63521] R/ep=  0.96
+             | steps/ep= 14.58, fps=  583.78, maxq=  0.96.
+19:56:35 [I] SCS9N1-C51.train: [ 1760000/   91817] R/ep=  0.95
+             | steps/ep= 16.56, fps= 2682.87.
+19:57:44 [I] SCS9N1-C51.train: [ 1770000/   92430] R/ep=  0.95
+             | steps/ep= 16.31, fps= 4655.05.
+19:58:53 [I] SCS9N1-C51.train: [ 1780000/   93039] R/ep=  0.95
+             | steps/ep= 16.42, fps= 4642.14.
+19:59:57 [I] SCS9N1-C51.train: [ 1790000/   93649] R/ep=  0.95
+             | steps/ep= 16.39, fps= 5014.55.
+20:00:59 [I] SCS9N1-C51.train: [ 1800000/   94256] R/ep=  0.95
+             | steps/ep= 16.47, fps= 5140.38.
+20:00:59 [I] SCS9N1-C51.test: Test agent after 1800000 training steps.
+20:01:51 [I] SCS9N1-C51.test: [   30003/   65574] R/ep=  0.96
+             | steps/ep= 14.61, fps=  581.50, maxq=  0.96.
+20:02:55 [I] SCS9N1-C51.train: [ 1810000/   94852] R/ep=  0.95
+             | steps/ep= 16.78, fps= 2749.68.
+20:04:05 [I] SCS9N1-C51.train: [ 1820000/   95438] R/ep=  0.95
+             | steps/ep= 17.06, fps= 4604.17.
+20:05:13 [I] SCS9N1-C51.train: [ 1830000/   96042] R/ep=  0.95
+             | steps/ep= 16.56, fps= 4789.09.
+20:06:20 [I] SCS9N1-C51.train: [ 1840000/   96623] R/ep=  0.95
+             | steps/ep= 17.21, fps= 4796.94.
+20:07:23 [I] SCS9N1-C51.train: [ 1850000/   97234] R/ep=  0.95
+             | steps/ep= 16.37, fps= 5078.10.
+20:07:23 [I] SCS9N1-C51.test: Test agent after 1850000 training steps.
+20:08:14 [I] SCS9N1-C51.test: [   30003/   67607] R/ep=  0.96
+             | steps/ep= 14.76, fps=  579.92, maxq=  0.96.
+20:09:20 [I] SCS9N1-C51.train: [ 1860000/   97835] R/ep=  0.95
+             | steps/ep= 16.64, fps= 2718.18.
+20:10:26 [I] SCS9N1-C51.train: [ 1870000/   98449] R/ep=  0.95
+             | steps/ep= 16.29, fps= 4934.20.
+20:11:31 [I] SCS9N1-C51.train: [ 1880000/   99056] R/ep=  0.95
+             | steps/ep= 16.47, fps= 4969.94.
+20:12:38 [I] SCS9N1-C51.train: [ 1890000/   99661] R/ep=  0.95
+             | steps/ep= 16.53, fps= 4778.64.
+20:13:40 [I] SCS9N1-C51.train: [ 1900000/  100274] R/ep=  0.95
+             | steps/ep= 16.31, fps= 5235.01.
+20:13:40 [I] SCS9N1-C51.test: Test agent after 1900000 training steps.
+20:14:31 [I] SCS9N1-C51.test: [   30010/   69661] R/ep=  0.96
+             | steps/ep= 14.61, fps=  585.94, maxq=  0.96.
+20:15:34 [I] SCS9N1-C51.train: [ 1910000/  100862] R/ep=  0.95
+             | steps/ep= 17.01, fps= 2795.22.
+20:16:42 [I] SCS9N1-C51.train: [ 1920000/  101471] R/ep=  0.95
+             | steps/ep= 16.42, fps= 4686.32.
+20:17:51 [I] SCS9N1-C51.train: [ 1930000/  102075] R/ep=  0.95
+             | steps/ep= 16.56, fps= 4671.76.
+20:18:56 [I] SCS9N1-C51.train: [ 1940000/  102683] R/ep=  0.95
+             | steps/ep= 16.45, fps= 5014.24.
+20:19:58 [I] SCS9N1-C51.train: [ 1950000/  103284] R/ep=  0.95
+             | steps/ep= 16.64, fps= 5176.16.
+20:19:58 [I] SCS9N1-C51.test: Test agent after 1950000 training steps.
+20:20:49 [I] SCS9N1-C51.test: [   30007/   71720] R/ep=  0.96
+             | steps/ep= 14.57, fps=  582.62, maxq=  0.96.
+20:21:55 [I] SCS9N1-C51.train: [ 1960000/  103893] R/ep=  0.95
+             | steps/ep= 16.42, fps= 2714.19.
+20:23:05 [I] SCS9N1-C51.train: [ 1970000/  104505] R/ep=  0.95
+             | steps/ep= 16.34, fps= 4584.10.
+20:24:12 [I] SCS9N1-C51.train: [ 1980000/  105101] R/ep=  0.95
+             | steps/ep= 16.78, fps= 4798.67.
+20:25:21 [I] SCS9N1-C51.train: [ 1990000/  105713] R/ep=  0.95
+             | steps/ep= 16.34, fps= 4677.37.
+20:26:28 [I] SCS9N1-C51.train: [ 2000000/  106303] R/ep=  0.95
+             | steps/ep= 16.95, fps= 4734.84.
+20:26:28 [I] SCS9N1-C51.test: Test agent after 2000000 training steps.
+20:27:20 [I] SCS9N1-C51.test: [   30012/   73777] R/ep=  0.96
+             | steps/ep= 14.59, fps=  581.14, maxq=  0.96.

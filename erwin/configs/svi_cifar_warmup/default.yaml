@@ -1,0 +1,29 @@
+experiment: bnn-cifar10-short
+
+mode: SVI
+trn_mcs: 1
+tst_mcs: 64
+
+warmup:
+  epochs: 200
+  split: 0.5
+  reset_optim: yes
+
+epochs: 200
+
+optim:
+  name: Adam
+  args:
+    lr: 0.01
+    amsgrad: yes
+
+trn_loader:
+  batch_size: 128
+  shuffle: yes
+  num_workers: 2
+  pin_memory: yes
+val_loader:
+  batch_size: 1024
+  shuffle: yes
+  num_workers: 2
+  pin_memory: yes

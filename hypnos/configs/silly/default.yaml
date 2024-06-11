@@ -1,0 +1,19 @@
+# Dev config file
+
+experiment: Silly
+replay_path: "/atari/Seaquest/1/replay_logs"
+
+estimator:
+  name: InverseKinematicsDualNet
+  args_:
+    resnet: yes
+    hidden_size: 256
+    # support: [-10, 10, 51]
+    hist_len: 4
+    # initializer: "xavier_uniform"  # this field can be missing
+
+optim:
+  name: "Adam"
+  args_:
+    lr: 0.00025
+    eps: 0.0003125

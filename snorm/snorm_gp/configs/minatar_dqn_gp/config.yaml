@@ -1,0 +1,13 @@
+# DQN Minatar size sweep
+
+game: [MinAtar-breakout, MinAtar-asterix, MinAtar-seaquest, MinAtar-space_invaders]
+
+agent:
+  args_:
+    grad_penalty: [0.1, 1.0, 2.0]
+
+estimator:
+  args_:
+    layer_dims:
+      - [[24], [128]]
+      - [[24, 24, 24], [128]]

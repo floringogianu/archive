@@ -1,0 +1,17 @@
+experiment: phoenix
+N: 16
+lr: 0.25
+convergence_threshold: 0.001
+max_steps: 1e7
+cuda: True
+
+loss_fn: MSELoss
+noise_precision: 0.1
+
+priority: "uniform"
+
+er:
+  capacity: -1
+  batch_size: 1
+  hist_len: 1
+  async_memory: no

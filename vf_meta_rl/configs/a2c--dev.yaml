@@ -1,0 +1,48 @@
+run_id: bernoulli_metaworld_ml1_hiperparam_search
+
+task:
+  name: reach-v2
+  max_reward_value: 10
+
+meta_learning:
+  rollout_max_length: 500
+  meta_batch_size: 25
+  rollouts_per_task: 1
+
+model:
+  hidden_size: 256
+  init: default
+  obs_encoding: mlp
+  obs_encoding_hidden_size: 64
+
+rl_algorithm:
+  name: A2C
+  gamma: 0.99
+  gradient_clipping: [no]
+  beta_entropy: [0.000005, no]
+  beta_entropy_final_value: 0
+  beta_value_function_loss: 0.05
+  policy_dist_type: Gaussian
+  n_steps: 20
+  gae: yes
+  gae_lambda: 0.95
+ 
+optimizer:
+  name: Adam
+  args_:
+    lr: 0.0001
+    eps: 0.00001
+    betas: [0.9, 0.999]
+
+
+training:
+  nr_episodes: 18000
+  epoch_length: 100
+  nr_training_epochs: 360
+  model_checkpoint_frequency: 100
+  
+paths:
+  tensorboard_logdir: /root/RL/data/RNN_meta_learning/logs/tensorboard/GaussianMetaWorld_SingleTask_v5
+  
+
+

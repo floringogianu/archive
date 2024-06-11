@@ -1,0 +1,5 @@
+game: [MinAtar-asterix, MinAtar-breakout, MinAtar-seaquest, MinAtar-space_invaders]
+
+estimator:
+  args_:
+    prior: ["RBF/PiReLU", "Matern/PiReLU", "RBF/Triangle", "Matern/Triangle", "PiReLU", "Triangle"]

@@ -1,0 +1,12 @@
+N: [11,12,13,14,15,16,17]
+
+priority: [td, variance, uniform]
+estimator:
+  ensemble: [7, 11]
+
+er:
+  alpha: [0.7, 1.2]
+
+liftoff:
+  - vars: [priority, er.alpha]
+    "->": [[uniform, delete]]

@@ -1,0 +1,8 @@
+
+game: [ant, fetch, halfcheetah, "ur5e"]
+estimator:
+  args_:
+    spectral:
+      - null
+      - {"actor": "-2", "critic": "-2"}
+      - {"actor": "-2, -1", "critic": "-2"}

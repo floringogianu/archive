@@ -1,0 +1,7 @@
+
+env:
+  spec: [uniform, random, interpolation, composition, extrapolation]
+
+agent:
+  args_:
+    with_interaction_hist: [yes, no]

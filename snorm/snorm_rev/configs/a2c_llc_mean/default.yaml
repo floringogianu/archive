@@ -1,0 +1,32 @@
+# DQN Minatar
+
+experiment: A2C-llc
+device: cpu
+# save: yes
+# save_every_replay: False
+
+epochs: 20
+env_no: 8
+
+train_step_cnt: 25000  # these are "batched" steps
+valid_ep_cnt: 256  # some multiple of batch size
+
+game: LunarLanderContinuous-v2
+
+agent:
+  name: A2C
+  nsteps: 64
+  gamma: 0.99
+  entropy_coeff: 0.001
+
+estimator:
+  name: ActorCritic
+  args_:
+    layer_dims: [128, 128]
+    spectral: null
+
+optim:
+  name: "Adam"
+  args_:
+    lr: 0.00032
+    eps: 0.00000001

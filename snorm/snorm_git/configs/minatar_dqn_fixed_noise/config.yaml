@@ -1,0 +1,10 @@
+game: [MinAtar-asterix, MinAtar-breakout, MinAtar-seaquest, MinAtar-space_invaders]
+
+demon:
+  args_:
+    noise_channels: [8, 32]
+    noise: [yes]
+
+estimator:
+  args_:
+    spectral: [null]

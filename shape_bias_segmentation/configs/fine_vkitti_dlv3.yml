@@ -1,0 +1,46 @@
+experiment: fine_vk_dlv3  # vKitti_DeepLabV3
+
+step_no: 60000
+grad_acc_steps: 1  # no of gradient accumulation steps
+val_freq: 1000
+
+seed: 42
+device: cuda
+cudnn_benchmark: yes
+
+log_freq: 50
+verbose: no
+
+model:
+  github: pytorch/vision
+  model: deeplabv3_resnet101
+  pretrained: no
+
+dataset:
+  name: VKITTI
+  root: ./data/vkitti
+  styled: null
+  style_ratio: 0.5
+  augmentation:
+    strong: yes
+loader:
+  batch_size: 10
+  num_workers: 10
+  shuffle: yes
+  pin_memory: yes
+
+optim:
+  name: SGD
+  args:
+    lr: 0.001
+    momentum: 0.9
+    weight_decay: 0.0005
+scheduler:
+  name: "CosineAnnealingWarmRestarts"
+  args:
+    T_0: 3786
+    T_mult: 2
+    eta_min: 0.00001
+
+pretrained:
+  checkpoint: results/2020Jan15-182011_svk_dlv3/model_e022000.pth

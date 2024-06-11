@@ -1,0 +1,19 @@
+name: "Default"
+
+mdp_size: 5
+reward_noise_precision: 0.1
+
+experience_replay:
+  __name: "rank_noisy"
+  sampling: 'rank'
+  batch_size: 32
+  alpha: 0.95
+
+  bayesian: no
+  boot_no: 19
+  boot_p: 0.9
+  boot_shuffle: yes
+  boot_beta: 0.001
+
+# mse or huber
+loss: 'mse'

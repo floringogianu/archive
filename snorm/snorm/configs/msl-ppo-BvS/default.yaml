@@ -1,0 +1,33 @@
+# DQN Minatar
+
+experiment: msl\ppo
+device: cuda
+
+game: ant
+env_no: 2048
+
+epochs: 15
+train_step_cnt: 25000  # steps in the *parallel* env
+valid_ep_cnt: 4096  # some multiple of env_no
+
+agent:
+  name: PPO
+  nsteps: 128
+  batch_size: 1024
+  mini_epochs: 4
+  gamma: 0.95
+  entropy_coeff: 0.01
+  clip: 0.2
+  normalize_advantage: yes
+
+estimator:
+  name: ActorCritic
+  args_:
+    layer_dims: [128, 128]
+    spectral: null
+
+optim:
+  name: "Adam"
+  args_:
+    lr: 0.0001
+    eps: 0.00000001

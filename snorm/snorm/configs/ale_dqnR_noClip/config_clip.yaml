@@ -1,0 +1,17 @@
+# DQN hyperparams as in the Nature paper. Follows hyperparams from Dopamine:
+# github.com/google/dopamine/blob/master/dopamine/agents/dqn/configs/dqn_nature.gin
+
+game: [
+  gopher,
+  atlantis,
+  assault,
+  star_gunner,
+  time_pilot,
+  breakout
+]
+
+clip_rewards: [1.0]
+
+estimator:
+  args_:
+    spectral: [null, "-2"]

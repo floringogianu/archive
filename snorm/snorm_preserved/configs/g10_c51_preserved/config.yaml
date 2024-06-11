@@ -1,0 +1,9 @@
+# DQN hyperparams as in the Nature paper. Follows hyperparams from Dopamine:
+# github.com/google/dopamine/blob/master/dopamine/agents/dqn/configs/dqn_nature.gin
+
+game: [alien, beam_rider, enduro, space_invaders]
+
+estimator:
+  name: [AtariNet, NormPreservingAtariNet]
+  args_:
+    spectral: ["-2", "-2,-3,-4,-5"]

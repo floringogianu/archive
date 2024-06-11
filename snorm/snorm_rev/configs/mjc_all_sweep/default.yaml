@@ -1,0 +1,42 @@
+# DQN Minatar
+
+experiment: MJC
+
+env:
+  args_:
+    name: Hopper-v2
+    env_no: 8
+    normalize_obs: no
+    device: cpu
+
+epochs: 20
+train_step_cnt: 100_000
+valid_ep_cnt: 256
+valid_deterministic_policy: yes
+
+agent:
+  name: PPO
+  dataset_size: 16384
+  batch_size: 64
+  mini_epochs: 10
+  max_batch_num: 0
+  gamma: 0.99
+  lmbd: 0.95
+  entropy_coeff: 0.0001
+  clip: 0.2
+  normalize_advantage: yes
+  reward_scale: null
+  clip_pi_grad_norm: 0.5
+
+estimator:
+  name: ActorCritic
+  args_:
+    layer_dims: [150, 150]
+    spectral: null
+    init: orthogonal
+
+optim:
+  name: Adam
+  args_:
+    lr: 0.0003
+    eps: 0.0000001

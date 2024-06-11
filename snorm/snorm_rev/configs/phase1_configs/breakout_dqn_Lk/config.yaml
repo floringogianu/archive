@@ -1,0 +1,7 @@
+
+game: [MinAtar-breakout, MinAtar-seaquest]
+
+estimator:
+  args_:
+    spectral: ["-1", "-2", "-3", "-1,-2", "-2,-3,-4", "-1,-2,-3,-4,-5"]
+    lipschitz_k: [1, 2, 4, 10]

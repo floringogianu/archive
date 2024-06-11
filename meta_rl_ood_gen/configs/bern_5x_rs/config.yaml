@@ -1,0 +1,11 @@
+
+env:
+  spec: [uniform, random, interpolation, composition, extrapolation]
+agent:
+  # start, end, total_steps ratio
+  entropy_scheduler:
+    - [1.0, 0.0, 0.75]
+    - [1.0, 0.0, 1.0]
+    - [1.0, 0.05, 0.5]
+  optim:
+    name: [Adam, RMSprop]

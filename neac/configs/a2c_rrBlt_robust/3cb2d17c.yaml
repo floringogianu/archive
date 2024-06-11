@@ -1,0 +1,16 @@
+algo: a2c
+base_seed: 42
+beta_entropy: 0.09970952522385954
+env_name: ReacherPyBulletEnv-v0
+experiment: a2c-rrBlt
+gamma: 0.9106044260887998
+hidden_size: 24
+log:
+  detailed: true
+  frequency: 100
+lr: 0.0008697584071055825
+nsteps: 60
+save_agent: true
+training_steps: 1000000
+val_episodes: 100
+val_frequency: 25000
